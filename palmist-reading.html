@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Elara Voss | Mystical Palm & Foot Reading</title>
+    <style>
+        :root {
+            --mystic-black: #0a0a0a;
+            --mystic-dark: #1a1a1a;
+            --mystic-gold: #d4af37;
+            --mystic-red: #8b0000;
+            --mystic-purple: #4b0082;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, var(--mystic-black) 0%, var(--mystic-dark) 50%, #1a0a2e 100%);
+            color: var(--mystic-gold);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 2px solid var(--mystic-gold);
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px var(--mystic-gold);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            opacity: 0.8;
+            font-size: 1.1em;
+        }
+        
+        .form-section {
+            background: rgba(26, 26, 26, 0.8);
+            padding: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            margin-bottom: 30px;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9em;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--mystic-gold);
+            color: var(--mystic-gold);
+            font-family: 'Georgia', serif;
+            font-size: 1em;
+            border-radius: 0;
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+        
+        .file-upload {
+            border: 2px dashed var(--mystic-gold);
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .file-upload:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--mystic-red);
+        }
+        
+        .file-upload input {
+            display: none;
+        }
+        
+        .file-preview {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .preview-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 1px solid var(--mystic-gold);
+        }
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .topic-checkbox {
+            display: none;
+        }
+        
+        .topic-label {
+            display: block;
+            padding: 15px;
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+        }
+        
+        .topic-checkbox:checked + .topic-label {
+            background: var(--mystic-gold);
+            color: var(--mystic-black);
+            border-color: var(--mystic-gold);
+            font-weight: bold;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--mystic-gold) 0%, var(--mystic-red) 100%);
+            border: none;
+            color: var(--mystic-black);
+            font-family: 'Georgia', serif;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 60px;
+            display: none;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-top-color: var(--mystic-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .result-section {
+            display: none;
+            background: rgba(26, 26, 26, 0.9);
+            padding: 50px;
+            border: 2px solid var(--mystic-gold);
+            margin-top: 40px;
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.2);
+        }
+        
+        .result-content {
+            line-height: 1.8;
+            font-size: 1.1em;
+        }
+        
+        .result-content h2 {
+            color: #fff;
+            font-size: 1.6em;
+            margin: 40px 0 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-left: 4px solid var(--mystic-gold);
+            padding-left: 20px;
+        }
+        
+        .result-content p {
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+        
+        .highlight-red {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .highlight-gold {
+            color: var(--mystic-gold);
+            font-weight: bold;
+        }
+        
+        .mystic-footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            text-align: center;
+            font-style: italic;
+            opacity: 0.7;
+        }
+        
+        .api-warning {
+            background: rgba(139, 0, 0, 0.3);
+            border: 1px solid var(--mystic-red);
+            padding: 20px;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+        }
+        
+        .api-warning code {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Master Elara Voss</h1>
+            <p class="subtitle">Legendary Palmist & Foot Reader • 40 Years of Hidden Truths</p>
+        </header>
+        
+        <div class="api-warning">
+            <strong>⚠️ Configuration Required:</strong> To use this mystic reading service, you must add your Qwen API key. 
+            Edit this file and replace <code>YOUR_QWEN_API_KEY_HERE</code> with your actual API key from DashScope/Alibaba Cloud.
+        </div>
+        
+        <div class="form-section" id="readingForm">
+            <form id="palmistForm">
+                <div class="form-group">
+                    <label for="name">Your Full Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your name as it appears on your soul">
+                </div>
+                
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select...</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="non-binary">Non-Binary</option>
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" required min="1" max="120" placeholder="Your years on this earth">
+                </div>
+                
+                <div class="form-group">
+                    <label for="status">Current Life Status</label>
+                    <input type="text" id="status" name="status" required placeholder="e.g., Single, Married, Seeking change, Lost...">
+                </div>
+                
+                <div class="form-group">
+                    <label>Upload Your Photos</label>
+                    <p style="opacity: 0.7; font-size: 0.9em; margin-bottom: 15px;">Upload clear images of both palms and your feet. The spirits need clear vision.</p>
+                    
+                    <div class="file-upload" onclick="document.getElementById('images').click()">
+                        <i class="fas fa-hand-paper" style="font-size: 2em; margin-bottom: 10px;"></i>
+                        <p>Click to upload images (Palms & Feet)</p>
+                        <p style="font-size: 0.8em; opacity: 0.7;">Supports: JPG, PNG, WEBP (Max 5 images)</p>
+                        <input type="file" id="images" name="images" multiple accept="image/*" required onchange="handleFileSelect(event)">
+                    </div>
+                    
+                    <div class="file-preview" id="filePreview"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>What Secrets Do You Seek?</label>
+                    <div class="topics-grid">
+                        <input type="checkbox" id="topic-career" class="topic-checkbox" name="topics" value="career">
+                        <label for="topic-career" class="topic-label">Career & Destiny</label>
+                        
+                        <input type="checkbox" id="topic-love" class="topic-checkbox" name="topics" value="love" checked>
+                        <label for="topic-love" class="topic-label">Love & Marriage</label>
+                        
+                        <input type="checkbox" id="topic-wealth" class="topic-checkbox" name="topics" value="wealth">
+                        <label for="topic-wealth" class="topic-label">Wealth & Fortune</label>
+                        
+                        <input type="checkbox" id="topic-health" class="topic-checkbox" name="topics" value="health">
+                        <label for="topic-health" class="topic-label">Health & Hormones</label>
+                        
+                        <input type="checkbox" id="topic-secret" class="topic-checkbox" name="topics" value="secret">
+                        <label for="topic-secret" class="topic-label">Hidden Secrets</label>
+                        
+                        <input type="checkbox" id="topic-future" class="topic-checkbox" name="topics" value="future" checked>
+                        <label for="topic-future" class="topic-label">Future Predictions</label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    🔮 Reveal My Destiny
+                </button>
+            </form>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p style="font-size: 1.2em; margin-top: 20px;">Master Elara is communing with the spirits...</p>
+            <p style="opacity: 0.7; margin-top: 10px;">Analyzing your lines, mounts, and energy signatures</p>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <div id="resultContent" class="result-content"></div>
+            <div class="mystic-footer">
+                <p>If you want me to reveal even deeper secrets that I cannot show publicly, message me on Reddit...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+    <script>
+        // ⚠️ REPLACE THIS WITH YOUR ACTUAL QWEN API KEY
+        const QWEN_API_KEY = 'YOUR_QWEN_API_KEY_HERE';
+        const QWEN_API_URL = 'https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation';
+        
+        let selectedImages = [];
+        
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            const preview = document.getElementById('filePreview');
+            preview.innerHTML = '';
+            selectedImages = [];
+            
+            if (files.length > 5) {
+                alert('Maximum 5 images allowed. The spirits can only process so much at once.');
+                return;
+            }
+            
+            Array.from(files).forEach(file => {
+                if (!file.type.startsWith('image/')) {
+                    alert(`${file.name} is not an image. Please upload only images.`);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'preview-image';
+                    preview.appendChild(img);
+                    
+                    // Store base64 for API call
+                    selectedImages.push({
+                        name: file.name,
+                        base64: e.target.result.split(',')[1], // Remove data:image/...;base64, prefix
+                        type: file.type
+                    });
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        async function convertBase64ToBlob(base64, type) {
+            const res = await fetch(base64);
+            return await res.blob();
+        }
+        
+        async function uploadImageToOSS(base64Image, filename) {
+            // For simplicity, we'll use the base64 directly in the API call
+            // In production, you might want to upload to your server first
+            return `data:image/${filename.split('.').pop()};base64,${base64Image}`;
+        }
+        
+        document.getElementById('palmistForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (QWEN_API_KEY === 'YOUR_QWEN_API_KEY_HERE') {
+                alert('⚠️ API Key Not Configured!\n\nPlease edit this HTML file and replace "YOUR_QWEN_API_KEY_HERE" with your actual Qwen API key from DashScope/Alibaba Cloud.');
+                return;
+            }
+            
+            if (selectedImages.length === 0) {
+                alert('Please upload at least one image of your palms or feet.');
+                return;
+            }
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                gender: document.getElementById('gender').value,
+                age: document.getElementById('age').value,
+                status: document.getElementById('status').value,
+                topics: Array.from(document.querySelectorAll('input[name="topics"]:checked')).map(cb => cb.value)
+            };
+            
+            // Show loading
+            document.getElementById('readingForm').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            
+            try {
+                // Prepare images for Qwen API
+                const imageContents = selectedImages.map(img => ({
+                    image: img.base64
+                }));
+                
+                // Build the prompt
+                const topicsText = formData.topics.join(', ');
+                const prompt = `You are Master Elara Voss, a legendary palmist and foot reader with 40 years of experience. You have an uncanny, almost supernatural ability to see deep hidden truths, secrets, and dramatic life events from palms and feet.
+
+Analyze the uploaded images of hands (palms) and feet. Look at lines, shapes, mounts, fingers, toes, skin texture, and overall energy.
+
+User Information:
+- Name: ${formData.name}
+- Gender: ${formData.gender}
+- Age: ${formData.age}
+- Current Life Status: ${formData.status}
+
+Topics they want to know about: ${topicsText}
+
+Your task:
+1. First, briefly describe what you see in their palms and feet in a mystical way (2-3 sentences). Mention specific lines or features (fate line, heart line, life line, head line, mounts, toe shapes, etc.)
+
+2. Then give a SHOCKING, dramatic, and highly personalized reading:
+   - Use bold, emotional, and mysterious language
+   - Include surprising twists, hidden warnings, secret strengths, past secrets, and future predictions
+   - Make it feel extremely personal — as if you actually see their soul
+   - Add specific timelines (e.g., "by age 34", "in the next 18 months", "after your 29th birthday")
+   - For sensitive topics like sex life, hormones, marriage — be direct, spicy, and revealing but never vulgar
+
+Style Rules:
+- Write like a real mystical master speaking directly to the user
+- Use phrases like: "I see...", "Your palms reveal a shocking truth...", "Few people have this mark...", "This is rare and powerful...", "Beware...", "A major turning point is coming..."
+- Make the answers addictive and emotional — the user should feel "Wow, how does it know this?!"
+- Do NOT sound like generic AI. Be poetic, intense, and slightly dark/mysterious
+- Keep total response between 600-1200 words
+- Structure the output with clear headings for each topic using HTML tags (<h2>, <p>, etc.)
+
+Be brutally honest and specific. Shock the user. Make them feel seen on a soul level.
+
+End with: "<p class='mystic-note'>If you want me to reveal even deeper secrets that I cannot show publicly, message me on Reddit...</p>"
+
+Format your entire response in HTML with proper tags (<h2> for headings, <p> for paragraphs, <span class='highlight-red'> or <span class='highlight-gold'> for emphasis).`;
+
+                // Call Qwen API
+                const response = await fetch(QWEN_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${QWEN_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'qwen-vl-max-latest',
+                        input: {
+                            messages: [{
+                                role: 'user',
+                                content: [
+                                    ...imageContents,
+                                    { text: prompt }
+                                ]
+                            }]
+                        },
+                        parameters: {
+                            temperature: 0.8,
+                            top_p: 0.9,
+                            max_tokens: 2000
+                        }
+                    })
+                });
+                
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'API request failed');
+                }
+                
+                const data = await response.json();
+                const readingContent = data.output?.choices?.[0]?.message?.content || 'The spirits were silent...';
+                
+                // Display result
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('resultSection').style.display = 'block';
+                document.getElementById('resultContent').innerHTML = readingContent;
+                
+                // Save to public_html (client-side only - in production, send to your server)
+                saveReadingToFile(formData.name, readingContent);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('readingForm').style.display = 'block';
+                alert(`The spirits encountered an error: ${error.message}\n\nPlease check your API key and try again.`);
+            }
+        });
+        
+        function saveReadingToFile(name, content) {
+            // Create a downloadable file with the reading
+            const fullHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic Reading - ${name}</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #1a0a2e 100%);
+            color: #d4af37;
+            font-family: Georgia, serif;
+            padding: 40px;
+            line-height: 1.8;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { text-align: center; text-transform: uppercase; letter-spacing: 3px; border-bottom: 2px solid #d4af37; padding-bottom: 20px; }
+        h2 { color: #fff; border-left: 4px solid #d4af37; padding-left: 15px; margin-top: 40px; }
+        .highlight-red { color: #ff6b6b; font-weight: bold; }
+        .highlight-gold { color: #d4af37; font-weight: bold; }
+        .mystic-note { margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(212, 175, 55, 0.3); text-align: center; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mystic Reading for ${name}</h1>
+        ${content}
+    </div>
+</body>
+</html>`;
+            
+            const blob = new Blob([fullHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mystic-reading-${name.replace(/\s+/g, '-').toLowerCase()}-${Date.now()}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            console.log('Reading saved! User can download the file and upload to public_html');
+        }
+    </script>
+</body>
+</html>
