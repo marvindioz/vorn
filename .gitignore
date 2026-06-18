@@ -1,1 +1,7 @@
-Nothing needs to be ignored since only a source file (index.html) was added without any build artifacts, dependencies, or temporary files.
+(defence_clone.html is just an html file, which is source code, so it should not be added to .gitignore)
+
+(index.html is also source code, so no need to ignore)
+
+(current .gitignore is empty and only html files are changed, no build artifacts, dependencies, or temp files)
+
+(nothing should be ignored)
