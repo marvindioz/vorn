@@ -1,7 +1,3 @@
-(defence_clone.html is just an html file, which is source code, so it should not be added to .gitignore)
+(defence_clone.html is a source file, so no additional ignores are needed)
 
-(index.html is also source code, so no need to ignore)
-
-(current .gitignore is empty and only html files are changed, no build artifacts, dependencies, or temp files)
-
-(nothing should be ignored)
+(empty - output nothing)
